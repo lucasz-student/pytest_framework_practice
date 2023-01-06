@@ -1,6 +1,7 @@
 import pytest 
 from selenium import webdriver
-from utilities.BaseClass import BaseClass
+
+from Utilities.BaseClass import BaseClass
 
 @pytest.fixture(scope="class")
 def setup(request): 
@@ -14,4 +15,5 @@ def setup(request):
 
     request.cls.driver = driver
 
-    yield driver.close()
+    yield 
+    driver.close()
