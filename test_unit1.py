@@ -6,28 +6,25 @@ import time
 from TestData.HomePageData import HomePageData
 from Utilities.BaseClass import BaseClass
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+
 from selenium.webdriver.common.keys import Keys
+from pageObjects.HomePage_1 import HomePage
 
 class TestHomepage(BaseClass): 
     def test_addtocart(self, getData):
         # Use getData for dictionary
         log = self.getLogger()
+        Homepage = HomePage(self.driver)
 
         for i in range(1, 11):
             
-            self.driver.implicitly_wait(10)
-            search = self.driver.find_element_by_xpath("//input[@type='search']").send_keys(Keys.CONTROL, 'a')
-            search.send_keys(getData[f"vegetable{i}"])
-            wait = WebDriverWait(self.driver, 15)
-            wait.until(EC.presence_of_element_located((By.XPATH, "/html/body/div[1]/div/div[1]/div/div/div[3]/button")))
-            addToCart = self.driver.find_element_by_xpath("/html/body/div[1]/div/div[1]/div/div/div[3]/button").click()
+            self.waitTime(10)
+            Homepage.searchBarSend(getData[f"vegetable{i}"])
+            log.info(f"Adding vegetable {i} to bag")
+            self.waitPresenceByXPATH("/html/body/div[1]/div/div[1]/div/div/div[3]/button")
+            Homepage.addToCart()
         
-
-        cartNumber = self.driver.find_element_by_xpath("/html/body/div[1]/div/header/div/div[3]/div[1]/table/tbody/tr[1]/td[3]/strong")
-        
-        assert cartNumber.text == "10"
+        assert Homepage.cartNumber() == "10"
         
 
 

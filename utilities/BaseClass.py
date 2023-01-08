@@ -1,6 +1,10 @@
 import logging
 import inspect
-import pytest 
+import pytest
+from selenium import webdriver
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 
 @pytest.mark.usefixtures("setup")
 class BaseClass: 
@@ -14,3 +18,12 @@ class BaseClass:
 
         logger.setLevel(logging.INFO)  # any level; removes messages below level
         return logger
+
+    def waitTime(self, time): 
+        
+        self.driver.implicitly_wait(time)
+    
+    def waitPresenceByXPATH(self, xpath): 
+        wait = WebDriverWait(self.driver, 15)
+        wait.until(EC.presence_of_element_located((By.XPATH, xpath)))
+
