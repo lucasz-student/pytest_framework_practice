@@ -1,13 +1,6 @@
-from selenium.webdriver.support.select import Select
-from selenium import webdriver
 import pytest
-import time
-
 from TestData.HomePageData import HomePageData
 from Utilities.BaseClass import BaseClass
-from selenium.webdriver.common.by import By
-
-from selenium.webdriver.common.keys import Keys
 from pageObjects.HomePage_1 import HomePage
 
 class TestHomepage(BaseClass): 
